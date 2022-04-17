@@ -13,3 +13,5 @@ kubectl delete svc wordpress
 kubectl delete svc wordpress-mysql
 
 kubectl delete secret mysql-pass
+
+echo "Done!"
