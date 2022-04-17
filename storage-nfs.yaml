@@ -1,0 +1,76 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: manual
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: store-wp
+  labels:
+    storage.k8s.io/name: nfs
+    storage.k8s.io/part-of: kubernetes-complete-reference
+    storage.k8s.io/created-by: ssbostan
+spec:
+  accessModes:
+    - ReadWriteOnce
+#    - ReadOnlyMany
+#    - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  storageClassName: "manual"
+  persistentVolumeReclaimPolicy: Recycle
+  volumeMode: Filesystem
+  nfs:
+    server: 192.168.5.210
+    path: /mnt/wp
+#    readOnly: no
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: store-mysql
+  labels:
+    storage.k8s.io/name: nfs
+    storage.k8s.io/part-of: kubernetes-complete-reference
+    storage.k8s.io/created-by: ssbostan
+spec:
+  accessModes:
+    - ReadWriteOnce
+ #   - ReadOnlyMany
+ #   - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  storageClassName: "manual"
+  persistentVolumeReclaimPolicy: Recycle
+  volumeMode: Filesystem
+  nfs:
+    server: 192.168.5.210
+    path: /mnt/mysql
+#    readOnly: no
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
