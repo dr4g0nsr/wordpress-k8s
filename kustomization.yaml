@@ -3,6 +3,7 @@ secretGenerator:
   literals:
   - password=gertgb453
 resources:
-  - storage.yaml
+#  - storage.yaml
+  - storage-local.yaml
   - mysql-deployment.yaml
   - wordpress-deployment.yaml
